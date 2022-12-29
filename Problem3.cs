@@ -2,33 +2,51 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-class Solution {
+class Solution
+{
+    static bool isPrime(long number)
+    {
+        if (number <= 1) return false;
+        if (number == 2) return true;
+        if (number % 2 == 0) return false;
 
-    static void prime(int num) {
-        for (int z = 2; z <= num/2; z++) {
-            if (num <= 1) {
-                return false;
-            }
-            else if (num % z == 0) {
-                return false;
-            }
-            else {
-              return true;  
+        var boundary = (long)Math.Floor(Math.Sqrt(number));
+
+        for (long i = 3; i <= boundary; i += 2) {
+            if (number % i == 0) {
+                return false; 
             }
         }
+        return true;
     }
-    
-    static void Main(String[] args) {
-        int t = Convert.ToInt32(Console.ReadLine());
-        for(int a0 = 0; a0 < t; a0++){
+
+    static void Main(String[] args)
+    {
+        long t = Convert.ToInt64(Console.ReadLine());
+        for (long a0 = 0; a0 < t; a0++)
+        {
             long n = Convert.ToInt64(Console.ReadLine());
-            long largestPrime = 0;
-            for (int i = n/2; n >= 2; i--) {
-                if (number % i == 0 && prime(i)) {
-                    largestPrime = i;
+            List<long> factors = new List<long>();
+            List<long> primeFactors = new List<long>();
+            long max = 0;
+
+            for (long i = 1; i <= n; i++)
+            {
+                if (n % i == 0)
+                {
+                    factors.Add(i);
                 }
             }
-            Console.WriteLine(largestPrime);
+            foreach (long z in factors)
+            {
+                if (isPrime(z) == true)
+                {
+                    primeFactors.Add(z);
+                }
+                
+            }
+            max = primeFactors.OrderByDescending(t => t).First();
+            Console.WriteLine(max);         
         }
     }
 }
